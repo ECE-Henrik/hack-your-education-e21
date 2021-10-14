@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <title>Elephant slide js</title>
+    </head>
+
+    <body>
+        Num: <input name="num" type="text" id="num" /> <br/>
+        Price: <input name="value" type="text" id="value" /> <br/>
+        State: <input name="state" type="text" id="state" /> <br/>
+
+        <button onclick="calculate()">Calculate sum</button> <br/>
+
+        Result: <div id="result"></div> <br/>
+
+        <div id="error" style="color:red"></div>
+
+        <script>
+            function calculate() {
+                var num = document.getElementById("num").value;
+                var price = document.getElementById("value").value;
+                var state = document.getElementById("state").value.toLowerCase();
+
+                if (isNaN(num)) {
+                    document.getElementById("error").innerHTML = "Num is not a number<br/>";
+                }
+                if (isNaN(price)) {
+                    document.getElementById("error").innerHTML += "Price is not a number<br/>";
+                }
+                if (state != "ut" && state != "nv" && state != "tx" && state != "al" && state != "ca") {
+                    document.getElementById("error").innerHTML += "State is not valid<br/>";
+                }
+
+                if (document.getElementById("error").innerHTML.length > 0) {
+                    return;
+                }
+
+                var sum = num*price;
+
+                sum = calculateDiscount(sum);
+                sum = calculateTax(sum, state);
+
+                document.getElementById("result").innerHTML = sum;
+            }
+
+            function calculateTax(sum, state) {
+                var tax = 0;
+
+                if (state == "ut") {
+                    tax = sum*0.0685;
+                }
+                if (state == "nv") {
+                    tax = sum*0.08;
+                }
+                if (state == "tx") {
+                    tax = sum*0.0625;
+                }
+                if (state == "al") {
+                    tax = sum*0.04;
+                }
+                if (state == "ca") {
+                    tax = sum*0.0825;
+                }
+
+                return sum + tax;
+            }
+
+            function calculateDiscount(sum) {
+                var discount = 0;
+                if (sum > 50000) {
+                    discount = (sum*0.15);
+                }
+                if (sum > 10000) {
+                    discount = (sum*0.1);
+                }
+                if (sum > 7000) {
+                    discount = (sum*0.07);
+                }
+                if (sum > 5000) {
+                    discount = (sum*0.05);
+                }
+                if (sum > 1000) {
+                    discount = (sum*0.03);
+                }
+                return sum - discount;
+            }
+        </script>
+
+    </body>
+
+</html>

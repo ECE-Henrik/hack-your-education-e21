@@ -6,8 +6,8 @@
   <input type="number" formControlName="price">
   <label>State</label>
   <select type="text" formControlName="state">
-    <option *ngFor="let state of states">{{ state }}</option>
+    <option *ngFor="let state of states" [ngValue]='state.code'>{{ state.name }}</option>
   </select>
-  <button type="submit">Calculate</button>
+  <button type="submit" [disabled]='form.invalid'>Calculate</button>
 </form>
 {{ result | currency: 'USD'}}

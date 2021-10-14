@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-calculator',
@@ -8,40 +8,40 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CalculatorComponent {
 
-  states = ['ut', 'nv', 'tx', 'al' ,'ca']
+  states = [{name: 'Utah', code: 'ut'}, {name: 'Nevada', code: 'nv'}, {name: 'Texas', code: 'tx'}, {name: 'Alabama', code: 'al'} ,{ name: 'California', code: 'ca'}]
   result = 0;
 
   form = this.fb.group({
-    quantity: [''],
-    price: [''],
-    state: [''],
+    quantity: ['', Validators.required],
+    price: ['', Validators.required],
+    state: ['', Validators.required],
   }) 
 
   constructor(private fb: FormBuilder) { }
 
-  calculate(quantity: number, price: number, state: string): number {  
+  calculate(quantity: number, price: number, name: string): number {  
     var sum = quantity * price;
     sum = this.calculateDiscount(sum);
-    sum = this.calculateTax(sum, state);
+    sum = this.calculateTax(sum, name);
     return sum
   }
 
-  calculateTax(sum: number, state: string) {
+  calculateTax(sum: number, name: string) {
     var tax = 0;
 
-    if (state == "ut") {
+    if (name == "ut") {
         tax = sum*0.0685;
     }
-    if (state == "nv") {
+    if (name == "nv") {
         tax = sum*0.08;
     }
-    if (state == "tx") {
+    if (name == "tx") {
         tax = sum*0.0625;
     }
-    if (state == "al") {
+    if (name == "al") {
         tax = sum*0.04;
     }
-    if (state == "ca") {
+    if (name == "ca") {
         tax = sum*0.0825;
     }
 
@@ -69,6 +69,6 @@ calculateDiscount(sum: number) {
   }
 
   onSubmit() {
-    this.result = this.calculate(this.form.value.quantity, this.form.value.price, this.form.value.state)
+    this.result = this.calculate(this.form.value.quantity, this.form.value.price, this.form.value.name)
   }
 }

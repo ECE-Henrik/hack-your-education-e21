@@ -1,0 +1,14 @@
+<h1>Calculator</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>Quantity</label>
+  <input type="number" formControlName="quantity"> 
+  <label>Price</label>
+  <input type="number" formControlName="price">
+  <label>State</label>
+  <select type="text" formControlName="state">
+    <option *ngFor="let state of states" [ngValue]='state.code'>{{ state.name }}</option>
+  </select>
+  <button type="submit" [disabled]='form.invalid'>Calculate</button>
+</form>
+
+<h2>Total: {{ result | currency: 'USD'}}</h2>

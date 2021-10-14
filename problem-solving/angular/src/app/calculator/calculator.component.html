@@ -10,4 +10,5 @@
   </select>
   <button type="submit" [disabled]='form.invalid'>Calculate</button>
 </form>
-{{ result | currency: 'USD'}}
+
+<h2>Total: {{ result | currency: 'USD'}}</h2>
